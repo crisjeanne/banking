@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 
-function Login({ setUser }) {
-  const [username, setUsername] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+function Login(props) {
+  const { setUser, userArray, onShowRegister } = props;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUser({ username, accountNumber });
-    console.log('Logged in successfully');
-    setLoggedIn(true);
+    const foundUser = userArray.find(
+      (user) =>
+        user.username === username && user.password === password
+    );
+    if (foundUser) {
+      setUser(foundUser);
+    } else {
+      alert("Invalid username or password");
+    }
   };
-
-  if (loggedIn) {
-    return null;
-  }
 
   return (
     <div>
@@ -30,15 +32,17 @@ function Login({ setUser }) {
         </label>
         <br />
         <label>
-          Account Number:
+          Password:
           <input
             type="text"
-            value={accountNumber}
-            onChange={(event) => setAccountNumber(event.target.value)}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
         </label>
         <br />
         <button type="submit">Login</button>
+        <br />
+        <button type="button" onClick={onShowRegister}>Register</button>
       </form>
     </div>
   );

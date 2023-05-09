@@ -1,6 +1,7 @@
 import React from 'react';
 
-function Home({ user, onLogout }) {
+function Home(props) {
+  const { user, onLogout } = props
   if (user.length === 0) {
     return <p>No users found</p>;
   }
