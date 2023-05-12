@@ -75,7 +75,7 @@ function Layout() {
       ) : showLogin ? (
         <Login setUser={handleUserLogin} userArray={USER} onShowRegister={handleShowRegister} />
       ) : (
-        <Register onShowLogin={handleShowLogin} onCreateUser={handleNewUser} />
+        <Register onShowLogin={handleShowLogin} onCreateUser={handleNewUser} userArray={USER}/>
       )}
     </div>
   );
