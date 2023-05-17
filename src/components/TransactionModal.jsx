@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import TransactionForm from './TransactionForm'
 
 const TransactionModal = (props) => {
-const {onClose, showModal} = props
+  const {user,onClose, showModal} = props
   const [showDepositForm, setShowDepositForm] = useState(false);
   const [showWithdrawForm, setShowWithdrawForm] = useState(false);
+
+
+  const handleUpdateBalance = (amount) => {
+    user.forEach((u) => {
+      console.log(typeof amount)
+      console.log(typeof u.balance)
+      u.balance = parseFloat(u.balance)
+      amount = parseFloat(amount)
+      if(showDepositForm){
+        u.balance += amount
+      } else if (showWithdrawForm){
+        u.balance -= amount
+      }
+    })
+
+  }
 
   const handleDepositClick = () => {
     setShowDepositForm(true);
@@ -20,43 +37,28 @@ const {onClose, showModal} = props
   }
 
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>
+    <div>
+      <div >
+        <span onClick={onClose}>
           &times;
         </span>
-        <div className="transaction-modal">
-          <div className="column" onClick={handleDepositClick}>
+        <div >
+          <h2>{user.map((u) => (
+            <div key={u.id} >
+              <p>Account Balance: {u.balance}</p>
+            </div>
+          ))}</h2>
+          <div onClick={handleDepositClick}>
             <h2>Deposit</h2>
-            {showDepositForm && <DepositForm />}
+            {showDepositForm && <TransactionForm user={user} close={onClose} updateBalance={handleUpdateBalance} />}
           </div>
-          <div className="column" onClick={handleWithdrawClick}>
+          <div onClick={handleWithdrawClick}>
             <h2>Withdraw</h2>
-            {showWithdrawForm && <WithdrawForm />}
+            {showWithdrawForm && <TransactionForm user={user} close={onClose} updateBalance={handleUpdateBalance} />}
           </div>
         </div>
       </div>
     </div>
-  );
-};
-
-const DepositForm = () => {
-  return (
-    <form>
-      <label htmlFor="amount">Amount:</label>
-      <input type="text" name="amount" id="amount" />
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
-
-const WithdrawForm = () => {
-  return (
-    <form>
-      <label htmlFor="amount">Amount:</label>
-      <input type="text" name="amount" id="amount" />
-      <button type="submit">Submit</button>
-    </form>
   );
 };
 

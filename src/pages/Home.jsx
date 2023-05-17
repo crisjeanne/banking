@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import TransactionModal from '../components/TransactionModal';
 
 function Home(props) {
-  const { user, onLogout } = props
+  const {allUsers, user, onLogout } = props
   const [showModal, setShowModal] = useState(false)
+
+  console.log(allUsers)
 
   if (user.length === 0) {
     return <p>No users found</p>;
   }
 
   const handleTransactionClick = () => {
-    console.log(showModal);
     setShowModal(true);
   }
 
@@ -35,7 +36,7 @@ function Home(props) {
       </div>
       <div>
         <button onClick={handleTransactionClick}>New Transaction</button>
-        {showModal && <TransactionModal onClose={handleCloseModal} showModal={showModal}/>}
+        {showModal && <TransactionModal user={user} onClose={handleCloseModal} showModal={showModal}/>}
         <button onClick={handleLogout}>Logout</button>
       </div>
     </div>

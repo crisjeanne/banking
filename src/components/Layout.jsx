@@ -3,29 +3,32 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 
-const USER = [
+let USER = [
   {
     id: "1",
     username: "John",
     password: "123123",
     accountNumber: "123456789",
-    balance: 100
+    balance: 100.00
   },
   {
     id: "2",
     username: "Jane",
     password: "123123",
     accountNumber: "987653421",
-    balance: 200
+    balance: 200.00
   },
   {
     id: "3",
     username: "Mary",
     password: "123123",
     accountNumber: "123123123",
-    balance: 350
+    balance: 350.00
   }
 ]
+
+let CURRENT_USER = []
+
 
 function Layout() {
   const [userData, setUserData] = useState([]);
@@ -36,12 +39,16 @@ function Layout() {
       (u) => u.username === user.username && u.password === user.password
     );
     if (matchedUser) {
-      setUserData([matchedUser]);
+      CURRENT_USER.push(matchedUser);
+      localStorage.setItem('currentUser',JSON.stringify(CURRENT_USER));
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+      setUserData(currentUser);
     }
   };
 
   const handleUserLogout = () => {
-    setUserData([]);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    setUserData(currentUser);
     setShowLogin(true);
   };
 
@@ -71,7 +78,7 @@ function Layout() {
   return (
     <div>
       {userData.length > 0 ? (
-        <Home user={userData} onLogout={handleUserLogout} />
+        <Home user={userData} onLogout={handleUserLogout} allUsers={USER}/>
       ) : showLogin ? (
         <Login setUser={handleUserLogin} userArray={USER} onShowRegister={handleShowRegister} />
       ) : (
