@@ -1,7 +1,9 @@
 import Layout from "./components/Layout";
+import './App.css'
 function App() {
+  
   return (
-    <div>
+    <div id='app'>
       <Layout />
     </div>
   )

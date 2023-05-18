@@ -1,69 +1,89 @@
 import React, { useState } from 'react';
 
-function Register(props) {
-  const { onShowLogin, onCreateUser, userArray } = props;
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [usernameTaken, setUsernameTaken] = useState(false);
+const Register = ({ onToggleLogin }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+  const [isEmailTaken, setIsEmailTaken] = useState(false);
 
-  const isUsernameTaken = (username) => {
-    return userArray.some(user => user.username === username)
-  }
+  const handleRegister = (e) => {
+    e.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const isUsernameTaken = users.some((user) => user.username === username);
+    const isEmailTaken = users.some((user) => user.email === email);
 
-    const newUser = {
-      username,
-      password
-    };
-    if(isUsernameTaken(username)){
-      setUsernameTaken(true)
-    }else {
-      onCreateUser(newUser);
+    if (isUsernameTaken) {
+      setIsUsernameTaken(true);
+      return;
     }
 
-  };
+    if (isEmailTaken) {
+      setIsEmailTaken(true);
+      return;
+    }
 
-  const handleSwitchToLogin = () => {
-    onShowLogin();
+    const newUser = {
+      id: (Math.max(...users.map((user) => parseInt(user.id)), 0) + 1).toString(),
+      username,
+      password,
+      email,
+      accountNumber: (Math.floor(Math.random() * 1000000000) + 1).toString(),
+      balance: 0,
+    };
+
+    localStorage.setItem('users', JSON.stringify([...users, newUser]));
+    setIsRegistered(true);
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(event) => {
-              setUsername(event.target.value)
-              setUsernameTaken(false)
-            }}
-            required
-            minLength={4}
-          />
-          {usernameTaken && <p style={{ color: 'red' }}>Username already taken.</p> }
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-            minLength={8}
-          />
-        </label>
-        <br />
-        <button type="submit">Register</button>
-      </form>
-      <button onClick={handleSwitchToLogin}>Login</button>
+    <div className='intro'>
+      <h1>Banking</h1>
+      <div id='register'>
+        <h2>Register</h2>
+          <form onSubmit={handleRegister}>
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              minLength={4}
+            />
+            {isUsernameTaken && (
+              <p style={{ color: "red" }}>Username is already taken. Please choose a different one.</p>
+            )}
+            <br />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            {isEmailTaken && (
+              <p style={{ color: "red" }}>Email is already taken. Please choose a different one.</p>
+            )}
+            <br />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+            <br />
+            <button type="submit">Register</button>
+          </form>
+          <p>Already have an account? <button onClick={onToggleLogin}>Login</button> </p>
+        
+      </div>
     </div>
+    
   );
-}
+};
 
-export default Register
+export default Register;

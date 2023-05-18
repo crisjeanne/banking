@@ -1,51 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Dashboard from './Dashboard';
+import Register from './Register';
 
-function Login(props) {
-  const { setUser, userArray, onShowRegister } = props;
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showRegister, setShowRegister] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const foundUser = userArray.find(
-      (user) =>
-        user.username === username && user.password === password
-    );
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const parsedUser = JSON.parse(loggedInUser);
+
+    if (parsedUser && parsedUser.isLoggedIn) {
+      setIsLoggedIn(true);
+      setUser(parsedUser.user);
+    }
+  }, []);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const users = JSON.parse(localStorage.getItem('users'));
+    const foundUser = users.find((u) => u.username === username && u.password === password);
+
     if (foundUser) {
+      setIsLoggedIn(true);
       setUser(foundUser);
+      localStorage.setItem('loggedInUser', JSON.stringify({ isLoggedIn: true, user: foundUser }));
     } else {
-      alert("Invalid username or password");
+      alert('Invalid username or password');
     }
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+    localStorage.removeItem('loggedInUser');
+  };
+
+  const handleToggleRegister = () => {
+    setShowRegister(true);
+  };
+
+  if (isLoggedIn) {
+    return <Dashboard user={user} onLogout={handleLogout} />;
+  }
+
+  if (showRegister) {
+    return <Register onToggleLogin={() => setShowRegister(false)} />;
+  }
+
   return (
-    <div>
+    <div className='intro'>
+      <h1>Banking</h1>
+      <div id='login'>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <br />
         <button type="submit">Login</button>
-        <br />
-        <button type="button" onClick={onShowRegister}>Register</button>
       </form>
+      <p> Create new user here: <button onClick={handleToggleRegister}>Register</button> </p>
+      
     </div>
+    </div>
+    
   );
-}
+};
 
 export default Login;

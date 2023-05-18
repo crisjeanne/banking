@@ -1,0 +1,247 @@
+  * {
+    font-family: 'Ubuntu', sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-style: italic;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  #root, #app, #layout{
+    height: 100%;
+  }
+
+  #layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro h1 {
+    display: flex;
+    justify-content: center;
+    margin-top: 3em;
+  }
+
+  input {
+    padding: 7px;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #fbfbfb;
+    border: 2px solid transparent;
+    height: 36px;
+    box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0 / 7%), 0 1px 1.5px 0 rgb(0 0 0 / 5%);
+  }
+
+  input:focus{
+    border: 2px solid #000;
+    border-radius: 4px;
+  }
+
+  button {
+    display: inline-block;
+    outline: 0;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    transition: all .3s ease;
+    text-align: center;
+    min-width: 110px;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  button:hover {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.459);
+  }
+
+  #logout {
+      color: rgba(160, 0, 0, 0.863);  
+  }
+
+  #dashboard{
+    display: grid;
+    margin: 0em 5em 1em 5em ;
+    padding: 2em;
+    border: 1px solid black;
+    border-radius: 0.3em;
+    grid-template-columns: 2fr 2fr;
+  }
+
+  #main {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  #card {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    margin: 1em 10em 1em 1em;
+    padding: 3em;
+    border: 1px solid black;
+    border-radius: 0.3em;
+  }
+
+  #card p{
+    font-size: larger;
+  }
+
+  #card * {
+    margin-bottom: 0px;
+    padding: 0.3em;
+  }
+
+  #logout {
+    margin: 0.5em;
+  }
+
+
+  #transaction {
+    display: grid;
+    place-items: center;
+    padding: 1em;
+    border-left: 1px solid black;
+    grid-column: 2/3;
+  }
+
+  #transaction button {
+    width: 100%;
+    height: 100%;
+    margin: 0.5em 0em 0.5em 0em;
+  }
+  
+  #transfer, #deposit, #withdraw {
+    padding: 1em;
+  }
+
+  #transfer label, #deposit label, #withdraw label {
+    width: 100%;
+  }
+  #transfer input, #deposit input, #withdraw input {
+    width: 100%;
+  }
+
+  #deposit {
+    max-width: 500px;
+    min-width: 400px;
+  }
+
+  #withdraw {
+    max-width: 500px;
+    min-width: 400px;
+  }
+
+  #expenseTracker {
+    display: grid;
+    margin-top: 2em;
+    padding: 1em;
+  }
+
+  #expenseTracker h2{
+    text-decoration: underline;
+  }
+
+  #expenseTracker button {
+    width: 10em;
+    margin: 1em 1em 0em 0em;
+  }
+ 
+
+  #expenseList {
+    margin: 2em 1em 1em 1em;
+  }
+
+  #expenseItems{
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: 220px;
+    overflow-y: auto;
+    list-style: none;
+  }
+
+  #expenseItems li {
+    padding: 1em 0em 1em 0em;
+    border-bottom: 1px solid black;
+  }
+
+
+  #transactionHistory {
+    margin-top: 1em;
+    padding-top: 1em;
+    padding-left: 1em;
+    border-top: 1px solid black;
+    border-left: 1px solid  black;
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+
+  #transactionHistory h2{
+    margin: 1em;
+    text-decoration: underline;
+  }
+
+  #transactionsList {
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: 403px;
+    overflow-y: auto;
+    list-style: none;
+  }
+
+   #transactionsList li {
+    padding: 1em 0em 1em 0em;
+    border-bottom: 1px solid black;
+  }
+
+  #layout {
+    display: flex;
+    margin: 1em;
+    padding: 1em;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  #login {
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 2em;
+  }
+
+  #login form input{
+    margin-top: 1em;
+  }
+
+  #login button {
+    margin: 1em 0em 1em 0em;
+  }
+
+  #register {
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 2em;
+  }
+
+  #register form input{
+    margin-top: 1em;
+  }
+
+
+  #register button {
+    margin: 1em 0em 1em 0em;
+  }
