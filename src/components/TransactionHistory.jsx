@@ -4,7 +4,7 @@ const TransactionHistory = (props) => {
     const { transactions } = props
     return (
         <div id='transactionHistory'>
-            <h2>Transaction History here</h2>
+            <h2>Transaction History</h2>
             <ul id='transactionsList'>
               {transactions.map((transaction, index) => (
                 <li key={index}>

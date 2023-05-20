@@ -68,6 +68,8 @@ const Transfer = ({ user, balance, onTransactionComplete }) => {
     localStorage.setItem('transactions', JSON.stringify(transactions));
 
     onTransactionComplete();
+
+    alert(`Successfully sent to ${recipient} with Account #: ${recipientAccountNumber}`)
   };
 
   return (

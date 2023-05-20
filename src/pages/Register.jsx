@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Register = ({ onToggleLogin }) => {
   const [username, setUsername] = useState('');
@@ -36,7 +36,17 @@ const Register = ({ onToggleLogin }) => {
 
     localStorage.setItem('users', JSON.stringify([...users, newUser]));
     setIsRegistered(true);
+    
+    alert("You have successfully registered an account. Please Log in.")
+
   };
+
+  useEffect(() => {
+    if (isRegistered) {
+      onToggleLogin(); 
+    }
+  }, [isRegistered, onToggleLogin]);
+
 
   return (
     <div className='intro'>

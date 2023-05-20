@@ -9,6 +9,7 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [showRegister, setShowRegister] = useState(false);
 
+
   useEffect(() => {
     const loggedInUser = localStorage.getItem('loggedInUser');
     const parsedUser = JSON.parse(loggedInUser);
@@ -21,8 +22,8 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    const users = JSON.parse(localStorage.getItem('users'));
+  
+    const users = JSON.parse(localStorage.getItem('users')) || [];
     const foundUser = users.find((u) => u.username === username && u.password === password);
 
     if (foundUser) {
